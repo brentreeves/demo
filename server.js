@@ -14,6 +14,16 @@ app.use(express.static("public"));
 // last known count
 let count = 0;
 
+app.get("/hooks", async (req, res) => {
+  const rc = db.collection("github").doc("hooks");
+  const doc = await rc.get();
+  if (!doc.exists) {
+    return res.sendStatus(400);
+  }
+
+  res.status(200).send(doc.data());
+});
+
 app.get("/addhook/:team/:event/:huffman", async (req, res) => {
   const { team, event, huffman } = req.params;
   console.log(`/addhook team: ${team} event: ${event}, [${huffman}]`);
