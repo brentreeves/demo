@@ -1,0 +1,63 @@
+### GET FRIENDs
+GET http://localhost:8383/github
+
+### GET FRIEND
+GET http://localhost:8383/hooks
+
+
+### ADD A hook
+POST http://localhost:8383/addhook
+Content-Type: application/json
+    
+    {
+        "team": "team1",
+        "event": "pre-push-22",
+        "timestamp": "2024-10-10T10:10:10"
+    }
+
+### ADD A hook
+POST http://localhost:8383/addhook
+Content-Type: application/json
+    
+    {
+        "team": "team2",
+        "event": "post-push",
+        "timestamp": "2019-20-10T10:10:10"
+    }
+
+### ADD A hook
+POST http://localhost:8383/addhook
+Content-Type: application/json
+    
+    {
+        "team": "team99",
+        "event": "post-life",
+        "timestamp": "2099-20-10T10:10:10"
+    }
+
+### ADD A hook
+POST http://localhost:8383/addhookp/team1/pre-push/blee
+Content-Type: application/json
+
+{
+}
+
+### UPDATE STATUS OF A FRIEND
+PATCH http://localhost:8383/changestatus
+Content-Type: application/json
+
+{
+    "name": "tomato",
+    "newStatus": "friend"
+}
+
+
+###DELETE A FRIEND
+DELETE http://localhost:8383/friends
+Content-Type: application/json
+
+{
+    "name": "team99"
+}
+
+
