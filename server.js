@@ -2,15 +2,33 @@ const express = require("express");
 const fs = require("node:fs");
 
 const { FieldValue } = require("firebase-admin/firestore");
+const { db } = require("./firebase.js");
 
 // set up express web server
 const app = express();
+app.use(express.json());
 
 // set up static content
 app.use(express.static("public"));
 
 // last known count
 let count = 0;
+
+app.get("/addhook/:team/:event/:huffman", async (req, res) => {
+  const { team, event, huffman } = req.params;
+  console.log(`/addhook team: ${team} event: ${event}, [${huffman}]`);
+  const rc = db.collection("github").doc("hooks");
+  if (huffman && huffman == "purple") {
+    console.log("secret code word accepted", team, event);
+    const res2 = await rc.set(
+      {
+        [team]: { event: event, timestamp: FieldValue.serverTimestamp() },
+      },
+      { merge: true }
+    );
+  }
+  res.status(200).send(rc);
+});
 
 // Main page
 app.get("/", async (_request, response) => {
